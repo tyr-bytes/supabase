@@ -2,18 +2,19 @@ import '../../../packages/ui/build/css/themes/light.css'
 import '../../../packages/ui/build/css/themes/dark.css'
 
 import '../styles/index.css'
+import 'config/code-hike.scss'
 
-import { API_URL, APP_NAME, DEFAULT_META_DESCRIPTION } from 'lib/constants'
+import { useEffect } from 'react'
+import Head from 'next/head'
 import { DefaultSeo } from 'next-seo'
 import { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import Meta from '~/components/Favicons'
-import '../styles/index.css'
-import { post } from '~/lib/fetchWrapper'
+import { API_URL, APP_NAME, DEFAULT_META_DESCRIPTION } from 'lib/constants'
 import { AuthProvider, ThemeProvider, useTelemetryProps } from 'common'
-import Head from 'next/head'
-import 'config/code-hike.scss'
+import { post } from '~/lib/fetchWrapper'
+import { CommandMenuProvider } from 'ui'
+
+import Meta from '~/components/Favicons'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -85,7 +86,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       />
       <AuthProvider>
         <ThemeProvider detectSystemColorPreference={false}>
-          <Component {...pageProps} />
+          <CommandMenuProvider site="website">
+            <Component {...pageProps} />
+          </CommandMenuProvider>
         </ThemeProvider>
       </AuthProvider>
     </>
