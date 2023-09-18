@@ -35,7 +35,7 @@ const Index = ({ customerStories, blogPosts }: Props) => {
   }, [])
 
   return (
-    <Layout blogPosts={blogPosts}>
+    <Layout>
       <Hero />
       <Products {...content.productsSection} />
       <TwitterSocialSection />
@@ -50,12 +50,10 @@ const Index = ({ customerStories, blogPosts }: Props) => {
 
 export async function getStaticProps() {
   const customerStories = getSortedPosts({ directory: '_customers', limit: 3 })
-  const blogPosts = getSortedPosts({ directory: '_blog', runner: '** BLOG PAGE **', limit: 1 })
 
   return {
     props: {
       customerStories,
-      blogPosts,
     },
   }
 }

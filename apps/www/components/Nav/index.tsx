@@ -29,9 +29,8 @@ import ProductDropdown from './ProductDropdown'
 
 import SolutionsData from 'data/Solutions'
 import { useWindowSize } from 'react-use'
-import PostTypes from '../../types/post'
 
-const Nav = ({ blogPosts }: { blogPosts?: PostTypes[] }) => {
+const Nav = () => {
   const { isDarkMode } = useTheme()
   const router = useRouter()
   const { width } = useWindowSize()
@@ -68,7 +67,7 @@ const Nav = ({ blogPosts }: { blogPosts?: PostTypes[] }) => {
       {
         title: 'Developers',
         hasDropdown: true,
-        dropdown: <DevelopersDropdown blogPosts={blogPosts} />,
+        dropdown: <DevelopersDropdown />,
         dropdownContainerClassName: 'rounded-lg',
         subMenu: DevelopersData,
       },
