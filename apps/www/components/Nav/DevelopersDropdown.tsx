@@ -1,15 +1,11 @@
 import React from 'react'
-import Link from 'next/link'
-import { IconChevronRight, TextLink } from 'ui'
-
-import { data as DevelopersData } from 'data/Developers'
-import ProductIcon from '../ProductIcon'
-import { NavigationMenuLink } from 'ui/src/components/shadcn/ui/navigation-menu'
-import MenuItem from './MenuItem'
 import Image from 'next/image'
-import { getSortedPosts } from '../../lib/posts'
-import PostTypes from '../../types/post'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { IconChevronRight } from 'ui'
+
+import PostTypes from '~/types/post'
+import { data as DevelopersData } from 'data/Developers'
 
 type Props = {
   text: string
@@ -19,7 +15,7 @@ type Props = {
   svg?: any
 }
 
-const Developers = ({ blogPosts }: { blogPosts?: PostTypes[] }) => {
+const DevelopersDropdown = ({ blogPosts }: { blogPosts?: PostTypes[] }) => {
   const latestBlogPost = blogPosts ? blogPosts[0] : null
   const { basePath } = useRouter()
 
@@ -44,7 +40,7 @@ const Developers = ({ blogPosts }: { blogPosts?: PostTypes[] }) => {
         ))}
       </div> */}
       <div className="flex">
-        <div className="w-[500px] p-8 border-r grid gap-3 grid-cols-2">
+        <div className="w-[500px] p-6 border-r grid gap-3 grid-cols-2">
           {DevelopersData['navigation'].map((column) => (
             <div key={column.label} className="p-2 flex flex-col gap-6">
               <label className="text-muted text-xs uppercase tracking-widest font-mono">
@@ -57,14 +53,23 @@ const Developers = ({ blogPosts }: { blogPosts?: PostTypes[] }) => {
                       <a className="flex items-center gap-2 text-light hover:text-brand focus-visible:ring-2 focus-visible:outline-none focus-visible:rounded focus-visible:ring-foreground-lighter focus-visible:text-foreground-strong">
                         <svg
                           className="h-5 w-5 text-brand"
-                          viewBox="0 0 13 14"
+                          viewBox="0 0 14 14"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            fill="currentColor"
+                            {...(link.text === 'GitHub Discussions'
+                              ? {
+                                  fillRule: 'evenodd',
+                                  clipRule: 'evenodd',
+                                  fill: 'currentColor',
+                                }
+                              : {
+                                  stroke: 'currentColor',
+                                  strokeMiterlimit: '10',
+                                  strokeLinecap: 'round',
+                                  strokeLinejoin: 'round',
+                                })}
                             d={link.icon}
                           />
                         </svg>
@@ -85,8 +90,8 @@ const Developers = ({ blogPosts }: { blogPosts?: PostTypes[] }) => {
             </div>
           ))}
         </div>
-        <div className="flex flex-col w-[500px]">
-          <div className="flex-col gap-3 border-b p-8">
+        <div className="flex flex-col w-[500px] bg-alternative">
+          <div className="flex-col gap-3 border-b p-6">
             <Link href="/blog">
               <a className="inline-flex items-center gap-1 text-muted hover:text-brand text-xs uppercase tracking-widest font-mono mb-6">
                 Blog
@@ -113,7 +118,7 @@ const Developers = ({ blogPosts }: { blogPosts?: PostTypes[] }) => {
             </Link>
           </div>
           {/* <div className="flex-1 border-b p-8"></div> */}
-          <div className="flex items-center p-8">
+          <div className="flex items-center p-6">
             <Link href="/launch-week">
               <a className="group flex items-center gap-3 text-lighter">
                 <div className="relative rounded-md border h-20 w-32 flex-shrink-0 overflow-auto">
@@ -168,4 +173,4 @@ const Developers = ({ blogPosts }: { blogPosts?: PostTypes[] }) => {
   )
 }
 
-export default Developers
+export default DevelopersDropdown
