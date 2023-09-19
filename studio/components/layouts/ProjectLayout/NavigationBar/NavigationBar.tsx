@@ -4,7 +4,7 @@ import { isUndefined } from 'lodash'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { useFlag } from 'hooks'
+import { useFlag, useIsFeatureEnabled } from 'hooks'
 import { IS_PLATFORM } from 'lib/constants'
 import { detectOS } from 'lib/helpers'
 import {
@@ -37,9 +37,11 @@ const NavigationBar = () => {
   const navLayoutV2 = useFlag('navigationLayoutV2')
   const supabaseAIEnabled = useFlag('sqlEditorSupabaseAI')
 
+  const { auth: authEnabled } = useIsFeatureEnabled(['auth'])
+
   const activeRoute = router.pathname.split('/')[3]
   const toolRoutes = generateToolRoutes(projectRef, project, supabaseAIEnabled)
-  const productRoutes = generateProductRoutes(projectRef, project)
+  const productRoutes = generateProductRoutes(projectRef, project, { auth: authEnabled })
   const otherRoutes = generateOtherRoutes(projectRef, project)
   return (
     <div
